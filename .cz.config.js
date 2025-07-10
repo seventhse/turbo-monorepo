@@ -40,7 +40,6 @@ module.exports = defineConfig({
     useAI: false,
     aiNumber: 1,
     themeColorCode: '',
-    scopes: scopesOptions,
     allowCustomScopes: true,
     allowEmptyScopes: true,
     customScopesAlign: 'bottom',
