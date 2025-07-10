@@ -14,8 +14,8 @@ pre-commit:
             echo "⚠️  No ESLint config found for $file"
           fi
         done
-# commit-msg:
-#   parallel: true
-#   commands:
-#     lint-commit:
-#       run: cat .git/COMMIT_EDITMSG | commitlint
+commit-msg:
+  parallel: true
+  commands:
+    lint-commit:
+      run: pnpm exec commitlint --edit $1
