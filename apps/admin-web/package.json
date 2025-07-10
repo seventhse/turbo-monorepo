@@ -1,0 +1,44 @@
+{
+  "name": "@vi-space/admin-web",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "description": "admin",
+  "author": "Seventhse <season.sevent@icloud.com> (https://github.com/seventhse)",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@vi-space/common-ui": "workspace:*",
+    "@vi-space/utils": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.1.11",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vi-space/eslint-config": "workspace:*",
+    "@vi-space/typescript-config": "workspace:*",
+    "@vitejs/plugin-react": "4.6.0",
+    "autoprefix": "1.0.1",
+    "eslint": "catalog:",
+    "postcss": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

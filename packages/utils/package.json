@@ -1,0 +1,35 @@
+{
+  "name": "@vi-space/utils",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "description": "vi-space common util function.",
+  "author": "Seventhse <season.sevent@icloud.com> (https://github.com/seventhse)",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "clsx": "2.1.1",
+    "tailwind-merge": "3.3.1"
+  },
+  "devDependencies": {
+    "@vi-space/eslint-config": "workspace:*",
+    "@vi-space/typescript-config": "workspace:*",
+    "eslint": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:"
+  }
+}

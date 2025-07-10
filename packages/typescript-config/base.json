@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "resolvePackageJsonExports": true,
+    "resolvePackageJsonImports": true,
+    "verbatimModuleSyntax": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+    "useUnknownInCatchVariables": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+  },
+  "exclude": [
+    "dist",
+    "node_modules",
+    "**/*.test.*",
+    "**/__tests__",
+    "build",
+    "coverage"
+  ]
+}

@@ -1,0 +1,21 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint-eslint:
+      glob: '{apps,packages}/**/*.{js,jsx,ts,tsx}'
+      run: |
+        echo '🧹 Linting per-package...'
+        for file in {staged_files}; do
+          dir=$(dirname "$file")
+          root=$(echo "$dir" | grep -oE '^(apps|packages)/[^/]+')
+          if [ -f "$root/eslint.config.mjs" ]; then
+            pnpm exec eslint "$file" --config "$root/eslint.config.mjs" || exit 1
+          else
+            echo "⚠️  No ESLint config found for $file"
+          fi
+        done
+# commit-msg:
+#   parallel: true
+#   commands:
+#     lint-commit:
+#       run: cat .git/COMMIT_EDITMSG | commitlint
