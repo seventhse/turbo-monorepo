@@ -1,4 +1,4 @@
-import { writeFile } from 'node:fs/promises'
+import { writeFile, readFile } from 'node:fs/promises'
 import { readdir, stat } from 'node:fs/promises'
 import { EOL } from 'node:os'
 import { join, relative } from 'node:path'
@@ -27,23 +27,28 @@ export interface AutoExportsPluginOptions {
   extensions?: string[]
   contentCallback?: (relativePath: string) => string
   afterCallback?: (content: string) => string
+  cache?: boolean
 }
 
 export function AutoExportsPlugin(options: AutoExportsPluginOptions = {}) {
-
-  const {
+  let {
     entryDir = 'src',
     excludeFiles = ['index.ts'],
     extensions = ['ts', 'tsx'],
-    contentCallback = (relativePath) => {
-      return `export * from './${relativePath.replace(extensionReg, '')}'`
-    },
+    contentCallback,
     afterCallback = (content) => {
       return content
-    }
+    },
+    cache = true
   } = options
 
-  const extensionReg = new RegExp(`/.(${extensions?.join('|')})$/`)
+  const extensionReg = new RegExp(`.(${extensions?.join('|')})$`)
+
+  if (!contentCallback) {
+    contentCallback = (relativePath) => {
+      return `export * from './${relativePath.replace(extensionReg, '')}'`
+    }
+  }
 
   return {
     name: 'auto-exports',
@@ -57,11 +62,28 @@ export function AutoExportsPlugin(options: AutoExportsPluginOptions = {}) {
         if (excludeFiles.includes(relativePath)) {
           return null
         }
+        console.log(contentCallback(relativePath))
         return contentCallback(relativePath)
       }).filter(Boolean).join(EOL)
 
       let entryFilePath = join(entryDir, 'index.ts')
-      await writeFile(entryFilePath, afterCallback(content))
+
+      const finalContent = afterCallback(content)
+
+      if (cache) {
+        let existingContent = ''
+        try {
+          existingContent = await readFile(entryFilePath, 'utf-8')
+        } catch {
+          existingContent = ''
+        }
+        if (existingContent === finalContent) {
+          return
+        }
+      }
+
+      await writeFile(entryFilePath, finalContent)
+      console.info(`Updated ${entryFilePath}`)
     },
   }
 }
