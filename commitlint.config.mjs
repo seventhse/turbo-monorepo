@@ -1,10 +1,12 @@
-const getScopes = require('./scripts/get-scopes')
+import { getScopes } from "@vi-space/internal"
 
-module.exports = {
+const scopes = getScopes()
+
+export default {
   extends: ['@commitlint/config-conventional'],
   rules: {
     'scope-empty': [2, 'never'],
-    'scope-enum': [2, 'always', getScopes()],
+    'scope-enum': [2, 'always', scopes],
   },
   prompt: {
     alias: { chore: 'chore(repo): update repo lint tool config' },

@@ -1,5 +1,5 @@
+import { AutoExportsPlugin } from '@vi-space/internal'
 import { defineConfig } from 'tsdown'
-import { AutoExportsPlugin } from '../../scripts/auto-exports'
 
 export default defineConfig({
   entry: ['./src/index.ts'],

@@ -1,0 +1,33 @@
+{
+  "name": "@vi-space/internal",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Internal build and script tools",
+  "author": "Seventhse <season.sevent@icloud.com> (https://github.com/seventhse)",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@vi-space/eslint-config": "workspace:*",
+    "@vi-space/typescript-config": "workspace:*",
+    "eslint": "catalog:",
+    "rolldown": "1.0.0-beta.26",
+    "tsdown": "catalog:",
+    "typescript": "catalog:"
+  }
+}

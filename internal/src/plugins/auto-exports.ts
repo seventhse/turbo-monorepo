@@ -1,10 +1,9 @@
-import { writeFile, readFile } from 'node:fs/promises'
-import { readdir, stat } from 'node:fs/promises'
+import { readdir, readFile, stat, writeFile } from 'node:fs/promises'
 import { EOL } from 'node:os'
 import { join, relative } from 'node:path'
 import process from 'node:process'
 
-async function traverseDirs(dir: string) {
+async function traverseDirs(dir: string): Promise<string[]> {
   const status = await stat(dir).catch((e) => {
     console.error('error: ', e)
     return null
@@ -39,7 +38,7 @@ export function AutoExportsPlugin(options: AutoExportsPluginOptions = {}) {
     afterCallback = (content) => {
       return content
     },
-    cache = true
+    cache = true,
   } = options
 
   const extensionReg = new RegExp(`.(${extensions?.join('|')})$`)
@@ -62,11 +61,10 @@ export function AutoExportsPlugin(options: AutoExportsPluginOptions = {}) {
         if (excludeFiles.includes(relativePath)) {
           return null
         }
-        console.log(contentCallback(relativePath))
         return contentCallback(relativePath)
       }).filter(Boolean).join(EOL)
 
-      let entryFilePath = join(entryDir, 'index.ts')
+      const entryFilePath = join(entryDir, 'index.ts')
 
       const finalContent = afterCallback(content)
 
@@ -74,7 +72,8 @@ export function AutoExportsPlugin(options: AutoExportsPluginOptions = {}) {
         let existingContent = ''
         try {
           existingContent = await readFile(entryFilePath, 'utf-8')
-        } catch {
+        }
+        catch {
           existingContent = ''
         }
         if (existingContent === finalContent) {
@@ -83,7 +82,6 @@ export function AutoExportsPlugin(options: AutoExportsPluginOptions = {}) {
       }
 
       await writeFile(entryFilePath, finalContent)
-      console.info(`Updated ${entryFilePath}`)
     },
   }
 }
