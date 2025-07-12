@@ -1,6 +1,7 @@
 const getScopes = require('./scripts/get-scopes')
 const { defineConfig } = require('cz-git')
 
+const scopes = getScopes()
 module.exports = defineConfig({
   rules: {
     // @see: https://commitlint.js.org/#/reference-rules
@@ -34,7 +35,7 @@ module.exports = defineConfig({
       { value: 'chore', name: 'chore:    Other changes that don\'t modify src or test files', emoji: ':hammer:' },
       { value: 'revert', name: 'revert:   Reverts a previous commit', emoji: ':rewind:' },
     ],
-    scopes: [getScopes()],
+    scopes: scopes,
     useEmoji: false,
     emojiAlign: 'center',
     useAI: false,
