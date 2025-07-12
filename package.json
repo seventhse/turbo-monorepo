@@ -9,7 +9,7 @@
     "check-types": "turbo run check-types",
     "new-pkg": "turbo gen new-pkg",
     "commit": "czg",
-    "postinstall": "lefthook install && pnpm turbo run @vi-space/internal#build && pnpm turbo run post-build"
+    "postinstall": "lefthook install && pnpm turbo run post-build"
   },
   "devDependencies": {
     "@commitlint/cli": "19.8.1",
