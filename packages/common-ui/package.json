@@ -2,7 +2,6 @@
   "name": "@vi-space/common-ui",
   "type": "module",
   "version": "0.0.1",
-  "private": true,
   "description": "vi-space common ui component.",
   "author": "Seventhse <season.sevent@icloud.com> (https://github.com/seventhse)",
   "sideEffects": [
@@ -11,7 +10,7 @@
   "exports": {
     ".": "./dist/index.js",
     "./styles.css": "./dist/index.css",
-    "./*": "./dist/*.js"
+    "./*": "./dist/**/*.js"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -72,6 +71,7 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vi-space/eslint-config": "workspace:*",
+    "@vi-space/internal": "workspace:^",
     "@vi-space/typescript-config": "workspace:*",
     "eslint": "catalog:",
     "tailwindcss": "catalog:",

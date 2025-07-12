@@ -274,6 +274,9 @@ importers:
       '@vi-space/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@vi-space/internal':
+        specifier: workspace:^
+        version: link:../../internal
       '@vi-space/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -322,6 +325,9 @@ importers:
       '@vi-space/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@vi-space/internal':
+        specifier: workspace:^
+        version: link:../../internal
       '@vi-space/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

@@ -2,6 +2,13 @@
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
   "tasks": {
+    "post-build": {
+      "dependsOn": [
+        "@vi-space/internal#build",
+        "@vi-space/utils#build",
+        "@vi-space/common-ui#build"
+      ]
+    },
     "build": {
       "dependsOn": [
         "^build"
