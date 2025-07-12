@@ -10,6 +10,7 @@ pre-commit:
           root=$(echo "$dir" | grep -oE '^(apps|packages)/[^/]+')
           if [ -f "$root/eslint.config.mjs" ]; then
             pnpm exec eslint "$file" --config "$root/eslint.config.mjs" --fix || exit 1
+            git add "$file"
           else
             echo "⚠️  No ESLint config found for $file"
           fi
