@@ -4,5 +4,7 @@ export default defineConfig({
   entry: ['./src/index.ts'],
   minify: true,
   target: 'es2020',
-   external: ['react', 'react-dom']
+  clean: true,
+  unbundle: true,
+  external: ['react', 'react-dom']
 })

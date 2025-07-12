@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@vi-space/eslint-config": "workspace:*",
-    "@vi-space/internal": "workspace:^",
+    "@vi-space/internal": "workspace:*",
     "@vi-space/typescript-config": "workspace:*",
     "eslint": "catalog:",
     "tsdown": "catalog:",
