@@ -1,13 +1,12 @@
 import { versionBump } from "bumpp"
-import { readFile, writeFile, stat } from "node:fs/promises"
+import { readFile } from "node:fs/promises"
 import { join } from "node:path"
-import { execSync } from 'node:child_process'
+import { writeChangelog } from "./changelog"
+import { Metadata } from "./metadata"
 import process from "node:process"
+import { autoTagAndCommit, getScopedGitCommits } from "./git"
 
 const baseDir = process.cwd()
-
-const packageList = ['common-ui', 'utils']
-const appList = []
 
 async function getPackage(packageDir: string) {
   const packagePath = join(packageDir, 'package.json')
@@ -16,109 +15,64 @@ async function getPackage(packageDir: string) {
 }
 
 
-interface GitCommit {
-  hash: string
-  type: 'feat' | 'fix'
-  scope: string
-  message: string
-}
+async function processPackage({ type, name }: { type: string, name: string }): Promise<string | null> {
+  const dir = join(baseDir, type, name)
+  const packageInfo = await getPackage(dir)
 
-function getScopedGitCommits(scope: string): GitCommit[] {
-  const raw = execSync(
-    'git log --pretty=format:"%h %s" --no-merges -n 100',
-    { encoding: 'utf-8' }
-  )
-
-  const lines = raw.split('\n').filter(line => line.trim() !== '')
-  const pattern = /^([a-f0-9]{7,})\s+(feat|fix)\(([^)]+)\):\s+(.+)$/
-
-  const commits: GitCommit[] = []
-
-  for (const line of lines) {
-    const match = line.match(pattern)
-    console.log(match)
-    if (!match) continue
-
-    const [, hash, type, matchedScope, message] = match
-
-    if (matchedScope === scope) {
-      commits.push({
-        hash,
-        type: type as 'feat' | 'fix',
-        scope: matchedScope,
-        message,
-      })
-    }
+  if (!packageInfo.name) {
+    throw new Error(`Missing "name" field in ${name}/package.json`)
   }
 
-  return commits
-}
-
-async function writeChangelog(packageDir: string, scope) {
-  const commits = getScopedGitCommits(scope)
-  if (commits.length === 0) {
-    console.log(`No commits found for scope "${scope}"`)
-    return
+  const scopedCommits = getScopedGitCommits(name)
+  if (scopedCommits.length === 0) {
+    return null
   }
 
-  const changelogPath = join(packageDir, 'CHANGELOG.md')
-  const changelogStat = await stat(changelogPath)
+  const res = await versionBump({
+    cwd: dir,
+    printCommits: false,
+    confirm: false,
+    commit: false,
+    tag: false,
+  })
 
-  // 读取已有内容（如果存在）
-  let existing = ''
-  if (changelogStat.isFile()) {
-    existing = await readFile(changelogPath, 'utf-8')
-  }
+  await writeChangelog({
+    packageDir: dir,
+    scope: name,
+    version: res.newVersion,
+    allCommits: scopedCommits
+  })
 
-  // 格式化新日志内容
-  const newEntries = commits.map(commit => {
-    return `- ${commit.type}(${commit.scope}): ${commit.message} (${commit.hash})`
-  }).join('\n')
+  await autoTagAndCommit({
+    name: packageInfo.name,
+    scope: name,
+    version: res.newVersion,
+    packageDir: dir
+  })
 
-  const header = `## Unreleased Changes\n\n`
-
-  // 合并写入（头部追加）
-  const updatedChangelog = `${header}${newEntries}\n\n${existing}`
-
-  await writeFile(changelogPath, updatedChangelog, 'utf-8')
-
-  console.log(`\n✅ Updated changelog for scope "${scope}" at ${changelogPath}`)
+  return `${packageInfo.name}: ${res.currentVersion} → ${res.newVersion}`
 }
 
-async function tryBumppPackage() {
+export async function tryBumppPackage() {
   const successMessages: string[] = []
   const errorMessages: string[] = []
 
-  for (const item of [...packageList, ...appList]) {
-    const dir = join(baseDir, 'packages', item)
-
+  for (const meta of Metadata) {
     try {
-      const packageInfo = await getPackage(dir)
 
-      if (!packageInfo.name) {
-        throw new Error(`Missing "name" field in ${item}/package.json`)
+      if (!getScopedGitCommits(meta.name).length) {
+        console.log(`ℹ️  No feat/fix commits for ${meta.name}, skipping...`)
+        continue
       }
 
-      console.log(`\n📦 Bumping ${packageInfo.name} ...`)
-
-      const res = await versionBump({
-        cwd: dir,
-        printCommits: false,
-        confirm: false,
-        commit: false,
-        tag: false,
-      })
-
-      const msg = ` ${packageInfo.name}: ${res.currentVersion} → ${res.newVersion}`
-      successMessages.push(msg)
-      writeChangelog(dir, item)
+      const msg = await processPackage(meta)
+      if (msg) successMessages.push(msg)
     } catch (e) {
       const reason = e instanceof Error ? e.message : String(e)
-      errorMessages.push(`❌ ${item}: ${reason}`)
+      errorMessages.push(`❌ ${meta.name}: ${reason}`)
     }
   }
 
-  // 输出汇总
   console.log('\n\n📝 Bump Summary\n-------------------')
 
   if (successMessages.length) {

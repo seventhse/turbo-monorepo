@@ -1,7 +1,7 @@
 {
   "name": "@vi-space/common-ui",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "vi-space common ui component.",
   "author": "Seventhse <season.sevent@icloud.com> (https://github.com/seventhse)",
   "sideEffects": [

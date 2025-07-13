@@ -1,5 +1,6 @@
 {
   "name": "vi-space",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -9,9 +10,9 @@
     "check-types": "turbo run check-types",
     "new-pkg": "turbo gen new-pkg",
     "commit": "czg",
-    "bumpp": "tsx ./scripts/bumpp.ts",
+    "publish:ci": "tsx scripts/publish.ts",
+    "release": "bumpp --execute=\"npm run release:prepare\" --all",
     "release:prepare": "turbo run pre-release",
-    "release": "pnpm release:prepare && pnpm bumpp",
     "prepare": "lefthook install && pnpm turbo run build --filter=@vi-space/internal"
   },
   "devDependencies": {
