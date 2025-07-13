@@ -11,7 +11,7 @@
     "new-pkg": "turbo gen new-pkg",
     "commit": "czg",
     "publish:ci": "tsx scripts/publish.ts",
-    "release": "bumpp --execute=\"npm run release:prepare\" --all",
+    "release": "bumpp",
     "release:prepare": "turbo run pre-release",
     "prepare": "lefthook install && pnpm turbo run build --filter=@vi-space/internal"
   },
