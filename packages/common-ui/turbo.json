@@ -6,7 +6,6 @@
   "tasks": {
     "build": {
       "dependsOn": [
-        "@vi-space/utils#build",
         "build:components",
         "build:styles"
       ]

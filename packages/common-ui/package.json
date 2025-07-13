@@ -19,6 +19,10 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "scripts": {
     "build:styles": "tailwindcss -i src/styles.css -o ./dist/index.css --minify",
     "build:components": "tsdown",

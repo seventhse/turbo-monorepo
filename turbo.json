@@ -8,6 +8,12 @@
         "@vi-space/common-ui#build"
       ]
     },
+    "pre-release": {
+      "dependsOn": [
+        "@vi-space/utils#build",
+        "@vi-space/common-ui#build"
+      ]
+    },
     "build": {
       "dependsOn": [
         "^build"

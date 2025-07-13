@@ -1,8 +1,7 @@
 {
   "name": "@vi-space/utils",
   "type": "module",
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.0.2",
   "description": "vi-space common util function.",
   "author": "Seventhse <season.sevent@icloud.com> (https://github.com/seventhse)",
   "exports": {
@@ -15,6 +14,10 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",

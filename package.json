@@ -9,7 +9,9 @@
     "check-types": "turbo run check-types",
     "new-pkg": "turbo gen new-pkg",
     "commit": "czg",
-    "postinstall": "lefthook install && pnpm turbo run post-build"
+    "release": "bumpp --execute=\"npm run release:prepare\" --all",
+    "release:prepare": "turbo run pre-release",
+    "prepare": "lefthook install && pnpm turbo run build --filter=@vi-space/internal"
   },
   "devDependencies": {
     "@commitlint/cli": "19.8.1",
@@ -17,6 +19,7 @@
     "@turbo/gen": "^2.5.4",
     "@types/node": "catalog:",
     "@vi-space/internal": "workspace:*",
+    "bumpp": "10.2.0",
     "czg": "1.12.0",
     "eslint": "catalog:",
     "lefthook": "1.12.1",
