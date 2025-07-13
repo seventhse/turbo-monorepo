@@ -1,7 +1,7 @@
 {
   "name": "@vi-space/utils",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "vi-space common util function.",
   "author": "Seventhse <season.sevent@icloud.com> (https://github.com/seventhse)",
   "exports": {
