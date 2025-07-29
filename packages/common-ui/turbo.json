@@ -10,6 +10,11 @@
         "build:styles"
       ]
     },
+    "build-storybook": {
+      "dependsOn": [
+        "build:styles"
+      ]
+    },
     "build:styles": {
       "outputs": [
         "dist/**"
@@ -26,6 +31,14 @@
         "dev:styles",
         "dev:components"
       ]
+    },
+    "storybook": {
+      "with": [
+        "dev:styles",
+        "@vi-space/utils#dev"
+      ],
+      "cache": false,
+      "persistent": true
     },
     "dev:styles": {
       "cache": false,

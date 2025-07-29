@@ -113,3 +113,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .array-field-row {
+    @apply grid gap-3 items-center justify-start grid-cols-3;
+  }
+
+  .array-field-row.vertical {
+    @apply grid grid-flow-row items-start justify-center;
+  }
+
+  .array-field-col {
+    @apply col-span-1 items-start justify-center;
+  }
+
+  .array-field-col.remove {
+    @apply w-[32px];
+  }
+}

@@ -1,2 +1,6 @@
 export * from './array'
+export * from './check-type'
 export * from './clsx'
+export * from './fn'
+export * from './object'
+export * from './type'

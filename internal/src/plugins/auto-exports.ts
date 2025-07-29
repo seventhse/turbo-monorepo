@@ -1,20 +1,34 @@
 import { readdir, readFile, stat, writeFile } from 'node:fs/promises'
 import { EOL } from 'node:os'
-import { join, relative } from 'node:path'
+import { extname, join, relative } from 'node:path'
 import process from 'node:process'
 
-async function traverseDirs(dir: string): Promise<string[]> {
+async function traverseDirs(dir: string, extensions: string[], root?: boolean): Promise<string[]> {
   const status = await stat(dir).catch((e) => {
     console.error('error: ', e)
     return null
   })
-  if (!status || status?.isFile()) {
-    return [dir]
+
+  if (!status) {
+    return []
+  }
+
+  if (status.isFile()) {
+    const ext = extname(dir)
+    if (extensions.includes(ext)) {
+      return [dir]
+    }
+    else {
+      return []
+    }
   }
   const dirChild = await readdir(dir)
+  if ((dirChild.includes('index.ts') || dirChild.includes('index.tsx')) && !root) {
+    return [dir]
+  }
   const result: string[] = []
   await Promise.all(dirChild.map(async (child) => {
-    const res = await traverseDirs(join(dir, child))
+    const res = await traverseDirs(join(dir, child), extensions)
     result.push(...res)
   }))
   return result
@@ -54,7 +68,7 @@ export function AutoExportsPlugin(options: AutoExportsPluginOptions = {}) {
     order: 'pre',
     async buildStart() {
       const entryDirAbsolute = join(process.cwd(), entryDir)
-      const exportList: string[] = await traverseDirs(entryDirAbsolute)
+      const exportList: string[] = await traverseDirs(entryDirAbsolute, extensions.map(item => `.${item}`), true)
 
       const content = exportList.map((item) => {
         const relativePath = relative(entryDir, item)

@@ -14,7 +14,7 @@
     "resolvePackageJsonImports": true,
     "verbatimModuleSyntax": true,
     "noImplicitOverride": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
     "useUnknownInCatchVariables": false,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,

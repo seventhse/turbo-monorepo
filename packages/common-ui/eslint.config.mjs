@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import config from '@vi-space/eslint-config/react'
 
 /** @type {import("eslint").Linter.Config} */
@@ -11,4 +14,7 @@ export default config.append([
       'react/no-unstable-context-value': 'off',
     },
   },
+  {
+    plugins: [storybook]
+  }
 ])
