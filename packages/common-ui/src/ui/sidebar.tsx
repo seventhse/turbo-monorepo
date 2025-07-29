@@ -1,6 +1,6 @@
 import type { VariantProps } from 'class-variance-authority'
 import { Slot } from '@radix-ui/react-slot'
-import { cn } from '@vi-space/utils/utils'
+import { cn } from '@vi-space/utils'
 import { cva } from 'class-variance-authority'
 import { PanelLeftIcon } from 'lucide-react'
 

@@ -1,6 +1,12 @@
 pre-commit:
   parallel: true
   commands:
+    pre-build:
+      glob: '{apps,packages}/**/*.{js,jsx,ts,tsx}'
+      run: |
+        echo '📦 Building packages...'
+        pnpm build || exit 1
+
     lint-eslint:
       glob: '{apps,packages}/**/*.{js,jsx,ts,tsx}'
       run: |

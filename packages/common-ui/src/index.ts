@@ -1,4 +1,5 @@
 export * from './components/schema-form'
+export * from './components/simple-form'
 export * from './components/simple-select'
 export * from './hooks/use-mobile'
 export * from './ui/alert'
