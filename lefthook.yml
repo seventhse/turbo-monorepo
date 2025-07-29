@@ -10,7 +10,8 @@ pre-commit:
       glob: '{apps,packages}/**/*.{js,jsx,ts,tsx}'
       run: |
         echo '🧹 Linting per-package...'
-        for file in {staged_files}; do
+        echo {{staged_files}}
+        for file in {{staged_files}}; do
           dir=$(dirname "$file")
           root=$(echo "$dir" | grep -oE '^(apps|packages)/[^/]+')
           if [ -f "$root/eslint.config.mjs" ]; then
