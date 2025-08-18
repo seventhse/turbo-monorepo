@@ -20,6 +20,9 @@ const basicSchema: Schema<{
   demo: Array<{
     info: string
   }>
+  test: {
+    demo: string
+  }
 }> = {
   username: {
     control: 'input',
@@ -43,6 +46,9 @@ const basicSchema: Schema<{
         control: 'input',
       },
     },
+    create: {
+
+    },
   },
   demo: {
     type: 'array',
@@ -54,6 +60,15 @@ const basicSchema: Schema<{
         edit: {
           label: 'Update Info',
         },
+      },
+    },
+  },
+  test: {
+    type: 'object',
+    children: {
+      demo: {
+        label: 'demo',
+        control: 'input',
       },
     },
   },

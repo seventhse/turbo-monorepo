@@ -14,6 +14,7 @@ export interface SimpleFormItemProps<Values extends FieldValues> {
   description?: string
   children?: ((field:
   ControllerRenderProps<Values, Path<Values>>, fieldState: ControllerFieldState, formState: UseFormStateReturn<Values>) => ReactNode) | ReactNode
+  required?: boolean
 }
 
 export function SimpleFormItem<Values extends FieldValues = FieldValues>(props: SimpleFormItemProps<Values>) {
@@ -23,18 +24,21 @@ export function SimpleFormItem<Values extends FieldValues = FieldValues>(props: 
     <FormField
       control={formContext.control}
       name={props.field}
-      render={({ field, fieldState, formState }) => (
-        <FormItem>
-          <FormLabel>{props.label}</FormLabel>
-          <FormControl>
-            {renderChildren(props?.children, field, fieldState, formState)}
-          </FormControl>
-          <FormDescription>
-            {props.description}
-          </FormDescription>
-          <FormMessage />
-        </FormItem>
-      )}
+      rules={{ required: props.required }}
+      render={({ field, fieldState, formState }) => {
+        return (
+          <FormItem>
+            <FormLabel>{props.label}</FormLabel>
+            <FormControl>
+              {renderChildren(props?.children, field, fieldState, formState)}
+            </FormControl>
+            <FormDescription>
+              {props.description}
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+        )
+      }}
     />
   )
 }

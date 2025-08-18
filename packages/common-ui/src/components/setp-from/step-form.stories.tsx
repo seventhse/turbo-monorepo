@@ -1,15 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-
-import { SimpleSelect } from './simple-select'
+import { StepForm } from '.'
 
 const meta = {
-  component: SimpleSelect,
-} satisfies Meta<typeof SimpleSelect>
+  component: StepForm,
+} satisfies Meta<typeof StepForm>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {
+export const Basic: Story = {
   args: {
   },
 }

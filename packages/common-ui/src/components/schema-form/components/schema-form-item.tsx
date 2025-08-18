@@ -71,6 +71,7 @@ export function SchemaFormItem<
         label={field?.label}
         description={field?.description}
         data-level={field.level}
+        required={field.required}
       >
         <Com {...(field?.controlProps ?? {})} />
       </SimpleFormItem>

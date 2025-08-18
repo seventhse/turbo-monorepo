@@ -59,6 +59,7 @@ export interface IBaseField<Value, AllFormValues extends object> {
    * @returns True if the field should be displayed, otherwise false.
    */
   show?: (value: Value, values: AllFormValues) => boolean
+  required?: boolean
 }
 
 /**
